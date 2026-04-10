@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1kg3q8l" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Web Modeler" exporterVersion="e103445" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+  <decision id="decision-1puhkc4" name="Avaliar Aprovação">
+    <informationRequirement id="InformationRequirement_0a5rfou">
+      <requiredInput href="#InputData_1e5ebo8" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0ac3k49" hitPolicy="FIRST">
+      <input id="Input_1" label="score">
+        <inputExpression id="InputExpression_1" typeRef="number">
+          <text>score</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="decision" typeRef="string">
+        <outputValues id="UnaryTests_1magnka">
+          <text>"aproved","rejected","review"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_1mke8bi">
+        <inputEntry id="UnaryTests_1op4pju">
+          <text>&gt; 70 </text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0qifs0v">
+          <text>"aproved"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ph5k54">
+        <inputEntry id="UnaryTests_0gfnoyp">
+          <text>[50...69]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1d9bbic">
+          <text>"review"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0p3cebg">
+        <inputEntry id="UnaryTests_0i3xxh4">
+          <text>&lt; 50</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08d000e">
+          <text>"rejected"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1e5ebo8" name="score" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="decision-1puhkc4">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1qz41kp" dmnElementRef="InputData_1e5ebo8">
+        <dc:Bounds height="45" width="125" x="177" y="297" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_15d44f1" dmnElementRef="InformationRequirement_0a5rfou">
+        <di:waypoint x="240" y="297" />
+        <di:waypoint x="250" y="200" />
+        <di:waypoint x="250" y="180" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

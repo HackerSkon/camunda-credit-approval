@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:ns1="modeler" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:ns0="xmlns" id="bpmn_copilot_Definition_id" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="e103445" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.9.0" ns0:modeler="http://camunda.org/schema/modeler/1.0" ns1:executionPlatform="Camunda Cloud" ns1:executionPlatformVersion="8.6">
+  <bpmn:process id="Process_CreditApproval" name="Aprovação de Crédito" processType="None" isClosed="false" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Início">
+      <bpmn:outgoing>Flow_0y5b9z1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0y5b9z1" sourceRef="StartEvent_1" targetRef="Activity_CalculateScore" />
+    <bpmn:serviceTask id="Activity_CalculateScore" name="Calcular Score" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="calculate-score" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0y5b9z1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1v2g8x3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1v2g8x3" sourceRef="Activity_CalculateScore" targetRef="Activity_EvaluateApproval" />
+    <bpmn:businessRuleTask id="Activity_EvaluateApproval" name="Avaliar Aprovação" implementation="##unspecified">
+      <bpmn:extensionElements>
+        <zeebe:calledDecision decisionId="decision-1puhkc4" resultVariable="decision" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1v2g8x3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p3n4f5</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_0p3n4f5" sourceRef="Activity_EvaluateApproval" targetRef="Gateway_IsApproved" />
+    <bpmn:exclusiveGateway id="Gateway_IsApproved" name="Aprovado?" default="Flow_ToRejectedEnd">
+      <bpmn:incoming>Flow_0p3n4f5</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToApprovedPath</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ToRejectedEnd</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_ToApprovedPath" name="Sim" sourceRef="Gateway_IsApproved" targetRef="Activity_SendResult">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=decision = "aproved"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_ToRejectedEnd" name="Não" sourceRef="Gateway_IsApproved" targetRef="Event_Rejected" />
+    <bpmn:endEvent id="Event_Rejected" name="Fim (Rejeitado)">
+      <bpmn:incoming>Flow_ToRejectedEnd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_SendResult" name="Enviar Resultado" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-result" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToApprovedPath</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qaz2ws</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1qaz2ws" sourceRef="Activity_SendResult" targetRef="Event_Approved" />
+    <bpmn:endEvent id="Event_Approved" name="Fim (Aprovado)">
+      <bpmn:incoming>Flow_1qaz2ws</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_CreditApproval">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_CreditApproval" bpmnElement="Process_CreditApproval">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="57" y="52" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="61" y="103" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_CalculateScore_di" bpmnElement="Activity_CalculateScore">
+        <dc:Bounds x="175" y="30" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_EvaluateApproval_di" bpmnElement="Activity_EvaluateApproval">
+        <dc:Bounds x="325" y="30" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_IsApproved_di" bpmnElement="Gateway_IsApproved" isMarkerVisible="true">
+        <dc:Bounds x="500" y="45" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="498" y="23" width="53" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_Rejected_di" bpmnElement="Event_Rejected">
+        <dc:Bounds x="657" y="152" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="637" y="193" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_SendResult_di" bpmnElement="Activity_SendResult">
+        <dc:Bounds x="625" y="30" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_Approved_di" bpmnElement="Event_Approved">
+        <dc:Bounds x="807" y="52" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="786" y="103" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0y5b9z1_di" bpmnElement="Flow_0y5b9z1">
+        <di:waypoint x="93" y="70" />
+        <di:waypoint x="175" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v2g8x3_di" bpmnElement="Flow_1v2g8x3">
+        <di:waypoint x="275" y="70" />
+        <di:waypoint x="325" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p3n4f5_di" bpmnElement="Flow_0p3n4f5">
+        <di:waypoint x="425" y="70" />
+        <di:waypoint x="500" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToApprovedPath_di" bpmnElement="Flow_ToApprovedPath">
+        <di:waypoint x="550" y="70" />
+        <di:waypoint x="625" y="70" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="578" y="45" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToRejectedEnd_di" bpmnElement="Flow_ToRejectedEnd">
+        <di:waypoint x="525" y="95" />
+        <di:waypoint x="525" y="170" />
+        <di:waypoint x="657" y="170" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="530" y="124" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qaz2ws_di" bpmnElement="Flow_1qaz2ws">
+        <di:waypoint x="725" y="70" />
+        <di:waypoint x="807" y="70" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
