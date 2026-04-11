@@ -39,8 +39,8 @@ public class CreditRequestService {
                 .latestVersion()
                 .variables(Map.of(
                         "creditRequestId", savedCreditRequest.getId().toString(),
-                        "income", savedCreditRequest.getIncome(),
-                        "age", savedCreditRequest.getAge()
+                        "income", Double.valueOf(savedCreditRequest.getIncome()),
+                        "age", Integer.valueOf(savedCreditRequest.getAge())
                 ))
                 .send()
                 .join();

@@ -1,5 +1,6 @@
 package solenetech.ao.credit.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,8 @@ public class CreditResult {
     private UUID id;
     @Enumerated(EnumType.STRING)
     private ResultStatus status;
-    private int score;
+    private double score;
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "creditrequest_id", unique = true)
     private CreditRequest creditRequest;
