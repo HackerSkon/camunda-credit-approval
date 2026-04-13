@@ -1,87 +1,118 @@
-💳 Credit Approval Workflow with Camunda 8 + Java
-Overview
+# 💳 Credit Approval System — Camunda 8 + Java
 
-This project implements a credit approval system using:
+## 🚀 Overview
 
-Camunda 8 (Zeebe) for workflow orchestration
-Java (Spring Boot) for business logic
-BPMN for process modeling
-DMN for decision automation
-FEEL for decision expressions
+This project implements a **real-world credit approval workflow** using Camunda 8 and Java.
 
-The system simulates a real-world fintech credit approval pipeline, including:
+It simulates how fintech systems automate credit decisions while still allowing human intervention when needed.
 
-Automated scoring
-Decision evaluation
-Manual review flow
-Result persistence
-Email notification
-🧠 Architecture
+---
 
-The system follows a process orchestration architecture:
+## 🧠 Problem
 
-Camunda (Zeebe) → controls workflow execution
-Spring Boot services → execute business logic
-Workers → handle tasks asynchronously
-Database (JPA) → persist requests and results
-🔄 Workflow (BPMN)
+Credit approval is not just a simple "yes or no".
 
-Main flow:
+It requires:
 
-Start credit request
-Calculate score
-Evaluate decision (DMN)
-Gateway:
-Approved → send email → end
-Rejected → end
-Review → manual approval → final decision
-⚖Decision Logic (DMN)
-Score	Decision
-> 70	Approved
-50–69	Review
-< 50	Rejected
-🧩 Features
-✔️ BPMN workflow orchestration
-✔️ DMN decision engine
-✔️ FEEL expressions
-✔️ Java workers (Zeebe)
-✔️ Manual review (User Task)
-✔️ Email integration (SendGrid)
-✔️ Idempotent result handling
-✔️ Persistent state with JPA
-🛠️ Tech Stack
-Java 21
-Spring Boot
-Camunda 8 (Zeebe)
-MYSQL
-Docker
-BPMN / DMN / FEEL
+* Risk evaluation
+* Business rules
+* Manual review in uncertain cases
 
-▶️ Running the Project
-1. Start Camunda Platform
-   docker compose up -d
-2. Run the Spring Boot app
-   ./mvnw spring-boot:run
-   🧪 Example Request
-   {
-   "name": "Rudi",
-   "income": 5000,
-   "age": 30
-   }
-   📈 Learning Goals
+This project demonstrates how to orchestrate that using BPMN and DMN.
 
-This project demonstrates:
+---
 
-Process orchestration vs business logic separation
-Scalable workflow design
-Handling real-world scenarios (review, retries, decisions)
-Integration between Camunda and Java
-🚀 Future Improvements
-Add Kafka (event-driven architecture)
-Improve observability (logs, metrics)
-Add authentication (OAuth2)
-Externalize secrets
-Add retry/backoff strategies
-👨‍💻 Author: Kudilson Paulo Garcia
+## ⚙️ Solution
 
-Built as part of a journey to becoming a Camunda Architect 🚀
+* Camunda 8 (Zeebe) orchestrates the workflow
+* Java (Spring Boot) executes business logic
+* DMN evaluates decisions automatically
+* User Task handles manual review
+* Workers process tasks asynchronously
+
+---
+
+## 🔄 Workflow
+
+![BPMN Diagram](./docs/bpmn.png)
+
+---
+
+## ⚖️ Decision Table
+
+![DMN Diagram](./docs/dmn.png)
+
+---
+
+## 🧩 Features
+
+* Automated credit scoring
+* Rule-based decision engine (DMN)
+* Manual approval flow
+* Email notification (SendGrid)
+* Persistent state with database
+* Idempotent result processing
+
+---
+
+## 🛠️ Tech Stack
+
+* Java 21
+* Spring Boot
+* Camunda 8 (Zeebe)
+* Docker
+* BPMN / DMN / FEEL
+
+---
+
+## ▶️ How to Run
+
+### 1. Start Camunda
+
+```bash
+cd camunda
+docker compose up -d
+```
+
+### 2. Run backend
+
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+
+---
+
+## 🧪 Example Request
+
+```json
+{
+  "name": "Rudi",
+  "income": 5000,
+  "age": 30
+}
+```
+
+---
+
+## 📈 What I Learned
+
+* Workflow orchestration vs business logic separation
+* BPMN + DMN in real applications
+* Building resilient async systems
+* Designing scalable backend services
+
+---
+
+## 🚀 Next Steps
+
+* Add KYC process
+* Integrate AI for fraud detection
+* Event-driven architecture (Kafka)
+* Observability (logs + metrics)
+
+---
+
+## 👨‍💻 Author
+
+Building my journey to become a **Camunda Architect** 🚀
