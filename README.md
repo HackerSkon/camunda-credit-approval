@@ -34,13 +34,13 @@ This project demonstrates how to orchestrate that using BPMN and DMN.
 
 ## 🔄 Workflow
 
-![BPMN Diagram](./docs/bpmn.png)
+![BPMN Diagram](./src/docs/bpmn.JPG)
 
 ---
 
 ## ⚖️ Decision Table
 
-![DMN Diagram](./docs/dmn.png)
+![DMN Diagram](./src/docs/dmn.JPG)
 
 ---
 
