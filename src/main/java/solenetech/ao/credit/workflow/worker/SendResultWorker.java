@@ -12,7 +12,6 @@ import solenetech.ao.credit.core.enuns.ResultStatus;
 import solenetech.ao.credit.core.repository.CreditRequestRepository;
 import solenetech.ao.credit.core.repository.CreditResultRepository;
 
-import java.util.Map;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -34,7 +33,7 @@ public class SendResultWorker {
 
          CreditRequest request =creditRequestRepository.findById(UUID.fromString(creditRequestId)).get();
          var resultStatus = switch (decision.toLowerCase()) {
-             case "aproved" -> {
+             case "approved" -> {
                  request.setStatus(RequestStatus.approved);
                  yield ResultStatus.Approved;
              }
@@ -47,14 +46,22 @@ public class SendResultWorker {
                  yield ResultStatus.Review;
              }
          };
+         var creditResultExist =creditResultRepository.findByCreditRequestId(UUID.fromString(creditRequestId));
+         if (creditResultExist !=null) {
+             creditResultExist.setStatus(resultStatus);
+             creditResultRepository.save(creditResultExist);
+             creditRequestRepository.save(request);
+             return;
+         }else{
+             creditResultExist = new CreditResult(
+                     null,
+                     resultStatus,
+                     score,
+                     request
+             );
+         }
 
-         CreditResult result = new CreditResult(
-                 null,
-                 resultStatus,
-                 score,
-                 request
-         );
-         creditResultRepository.save(result);
+         creditResultRepository.save(creditResultExist);
          creditRequestRepository.save(request);
      }
 }

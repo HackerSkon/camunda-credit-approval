@@ -1,0 +1,40 @@
+{
+  "type": "default",
+  "id": "Form_0meovjx",
+  "components": [],
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "schemaVersion": 4,
+  "components": [
+    {
+      "label": "Nome do Cliente",
+      "type": "textfield",
+      "key": "name",
+      "disabled": true
+    },
+    {
+      "label": "Score",
+      "type": "number",
+      "key": "score",
+      "disabled": true
+    },
+    {
+      "label": "Decisão",
+      "type": "select",
+      "key": "decision",
+      "values": [
+        {
+          "label": "Aprovar",
+          "value": "approved"
+        },
+        {
+          "label": "Rejeitar",
+          "value": "rejected"
+        }
+      ],
+      "validate": {
+        "required": true
+      }
+    }
+  ]
+}

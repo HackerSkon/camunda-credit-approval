@@ -11,6 +11,7 @@ import solenetech.ao.credit.core.repository.CreditRequestRepository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -49,5 +50,8 @@ public class CreditRequestService {
 
     public List<CreditRequest> getAll() {
         return creditRequestRepository.findAll();
+    }
+    public CreditRequest getById(UUID id) {
+        return creditRequestRepository.findById(id).get();
     }
 }
