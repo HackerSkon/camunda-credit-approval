@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1kg3q8l" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Web Modeler" exporterVersion="e103445" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1kg3q8l" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.44.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
   <decision id="decision-1puhkc4" name="Avaliar Aprovação">
     <informationRequirement id="InformationRequirement_0a5rfou">
       <requiredInput href="#InputData_1e5ebo8" />
@@ -10,9 +10,9 @@
           <text>score</text>
         </inputExpression>
       </input>
-      <output id="Output_1" label="decision" typeRef="string">
+      <output id="Output_1" label="decision" name="decision" typeRef="string">
         <outputValues id="UnaryTests_1magnka">
-          <text>"aproved","rejected","review"</text>
+          <text>"rejected","review","approved"</text>
         </outputValues>
       </output>
       <rule id="DecisionRule_1mke8bi">
@@ -20,12 +20,12 @@
           <text>&gt; 70 </text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0qifs0v">
-          <text>"aproved"</text>
+          <text>"approved"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0ph5k54">
         <inputEntry id="UnaryTests_0gfnoyp">
-          <text>[50...69]</text>
+          <text>[50 .. 69]</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1d9bbic">
           <text>"review"</text>
